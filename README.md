@@ -1,5 +1,7 @@
 # laravel-api-jwt
 
+## How it works
+
 `git clone https://github.com/andydptyo/laravel-api-jwt.git`
 
 `composer install`
