@@ -12,4 +12,4 @@ open `.env` then edit `DB_DATABASE,DB_USERNAME,DB_PASSWORD` according to yours
 
 if you want to insert dummy data run `php artisan db:seed`
 
-`php artisan serve` it will run in localhost:8000
+`php artisan serve` it will run in `localhost:8000`
