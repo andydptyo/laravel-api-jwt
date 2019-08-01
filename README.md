@@ -6,11 +6,11 @@
 
 `composer install`
 
-`php artisan key:generate`
-
 `cp .env.example .env`
 
 open `.env` then edit `DB_DATABASE,DB_USERNAME,DB_PASSWORD` according to yours
+
+`php artisan key:generate`
 
 `php artisan migrate`
 
