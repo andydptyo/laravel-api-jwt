@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+            return response()->json(['error' => 'Method Not Allowed']);
+        }
+
         if ($exception instanceof \Illuminate\Database\QueryException) {
             return response()->json(['error' => 'Invalid Params']);
         }
