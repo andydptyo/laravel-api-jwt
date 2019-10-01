@@ -12,6 +12,8 @@ open `.env` then edit `DB_DATABASE,DB_USERNAME,DB_PASSWORD` according to yours
 
 `php artisan key:generate`
 
+`php artisan jwt:secret`
+
 `php artisan migrate`
 
 if you want to insert dummy data run `php artisan db:seed`
