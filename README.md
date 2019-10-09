@@ -4,6 +4,8 @@
 
 `git clone https://github.com/andydptyo/laravel-api-jwt.git`
 
+`cd laravel-api-jwt`
+
 `composer install`
 
 `cp .env.example .env`
