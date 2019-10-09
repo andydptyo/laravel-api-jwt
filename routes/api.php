@@ -15,5 +15,5 @@ use App\User;
 */
 
 Route::resource('users', 'UserController')->middleware('jwt.verify');
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@login');
+Route::post('register', 'UserController@register')->name('api.register');
+Route::post('login', 'UserController@login')->name('api.login');

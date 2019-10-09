@@ -46,9 +46,7 @@ class UserController extends Controller
             'password' => bcrypt($request->get('password')),
         ]);
 
-        $token = JWTAuth::fromUser($user);
-
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('user'), 201);
     }
 
     public function getAuthenticatedUser()
