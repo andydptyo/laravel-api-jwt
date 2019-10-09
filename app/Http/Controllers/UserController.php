@@ -139,11 +139,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        if ($request->has('password')) {
+            $request->password = bcrypt($request->password);
+        }
+
+        $user->update($request->all());
 
         return response()->json(['success' => 'Update Success']);
     }
