@@ -50,9 +50,9 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Method Not Allowed']);
         }
 
-        if ($exception instanceof \Illuminate\Database\QueryException) {
+       if ($exception instanceof \Illuminate\Database\QueryException) {
             return response()->json(['error' => 'Invalid Params']);
-        }
+	}
 
         return parent::render($request, $exception);
     }
