@@ -8,4 +8,5 @@ class Product extends Model
 {
     protected $table = 'product';
     protected $fillable = ['name', 'price'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

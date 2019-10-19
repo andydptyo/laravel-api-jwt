@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Carbon\Carbon;
+use App\Product;
 
 class ProductTest extends TestCase
 {
@@ -39,5 +40,36 @@ class ProductTest extends TestCase
             'id' => $json['product']['id'],
             'name' => $json['product']['name'],
         ]);
+    }
+
+    public function testIndexShouldReturnProductList()
+    {
+        $product1 = new Product;
+        $product1->name = $this->faker->name;
+        $product1->price = $this->faker->randomDigitNotNull;
+        $product1->save();
+
+        $product2 = new Product;
+        $product2->name = $this->faker->name;
+        $product2->price = $this->faker->randomDigitNotNull;
+        $product2->save();
+
+        $response = $this->json('GET', '/api/products');
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'products' => [
+                    [
+                        'id' => $product1->id,
+                        'name' => $product1->name,
+                        'price' => $product1->price,
+                    ],
+                    [
+                        'id' => $product2->id,
+                        'name' => $product2->name,
+                        'price' => $product2->price,
+                    ],
+                ]
+            ]);
     }
 }
