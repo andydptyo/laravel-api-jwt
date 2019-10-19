@@ -93,4 +93,49 @@ class ProductTest extends TestCase
         $response = $this->delete("/api/products/999999");
         $response->assertStatus(204);
     }
+
+    public function testUpdateProductShouldUpdateDatabase()
+    {
+        $product1 = new Product;
+        $product1->name = $this->faker->name;
+        $product1->price = $this->faker->randomDigitNotNull;
+        $product1->save();
+
+        $data = [
+            'name' => $this->faker->name,
+            'price' => $this->faker->randomDigitNotNull,
+        ];
+        $response = $this->json('PUT', "/api/products/{$product1->id}", $data);
+        $response->assertStatus(200)
+            ->assertJson([
+                'product' => [
+                    'id' => $product1->id,
+                    'name' => $data['name'],
+                    'price' => $data['price'],
+                ]
+            ]);
+
+        $product1 = Product::find($product1->id);
+        $this->assertEquals($data['name'], $product1->name);
+        $this->assertEquals($data['price'], $product1->price);
+    }
+
+    public function testUpdateNonExistingProductShouldReturn404()
+    {
+        $response = $this->json('PUT', '/api/products/999999', []);
+        $response->assertStatus(404);
+    }
+
+    public function testUpdateWithInvalidParamsShouldReturnError()
+    {
+        $product1 = new Product;
+        $product1->name = $this->faker->name;
+        $product1->price = $this->faker->randomDigitNotNull;
+        $product1->save();
+
+        // empty name and price
+        $data = [];
+        $response = $this->json('PUT', "/api/products/{$product1->id}", $data);
+        $response->assertStatus(400);
+    }
 }
