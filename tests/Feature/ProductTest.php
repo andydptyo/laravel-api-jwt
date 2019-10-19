@@ -72,4 +72,25 @@ class ProductTest extends TestCase
                 ]
             ]);
     }
+
+    public function testDeleteShouldRemoveFromDatabase()
+    {
+        $product1 = new Product;
+        $product1->name = $this->faker->name;
+        $product1->price = $this->faker->randomDigitNotNull;
+        $product1->save();
+
+        $response = $this->delete("/api/products/{$product1->id}");
+
+        $response->assertStatus(204);
+
+        $product1 = Product::find($product1->id);
+        $this->assertNull($product1);
+    }
+
+    public function testDeleteNonExistingProductShouldDoNothing()
+    {
+        $response = $this->delete("/api/products/999999");
+        $response->assertStatus(204);
+    }
 }
