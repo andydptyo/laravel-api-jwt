@@ -73,6 +73,31 @@ class ProductTest extends TestCase
             ]);
     }
 
+    public function testGetSingleShouldReturnSingleProduct()
+    {
+        $product1 = new Product;
+        $product1->name = $this->faker->name;
+        $product1->price = $this->faker->randomDigitNotNull;
+        $product1->save();
+
+        $response = $this->json('GET', "/api/products/{$product1->id}");
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'product' => [
+                    'id' => $product1->id,
+                    'name' => $product1->name,
+                    'price' => $product1->price,
+                ]
+            ]);
+    }
+
+    public function testGetSingleNonExistingProductShouldReturn404()
+    {
+        $response = $this->json('GET', "/api/products/999999");
+        $response->assertStatus(404);
+    }
+
     public function testDeleteShouldRemoveFromDatabase()
     {
         $product1 = new Product;

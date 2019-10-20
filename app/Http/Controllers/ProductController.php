@@ -59,7 +59,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([], 404);
+        }
+
+        return response()->json(['product' => $product], 200);
     }
 
     /**
